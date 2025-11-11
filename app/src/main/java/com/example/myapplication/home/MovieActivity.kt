@@ -28,7 +28,9 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
-        recyclerView.adapter = MovieAdapter(movieList)
+        recyclerView.adapter = MovieAdapter(movieList) {
+            selectedMovie -> onItemClick(selectedMovie)
+        }
 
         addListener()
 
@@ -60,7 +62,7 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
         if(page < 10) presenter.fetchData(++page)
     }
 
-    class MovieAdapter(private val movies: List<Movie>): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>(){
+    class MovieAdapter(private val movies: List<Movie>, private val onItemClick: (Movie) -> Unit): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>(){
         inner class MovieViewHolder(val binding: MovieCardBinding) : RecyclerView.ViewHolder(binding.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -77,6 +79,10 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
             Glide.with(holder.itemView.context)
                 .load(IMAGE_BASE_URL + movie.posterPath)
                 .into(holder.binding.moviePoster)
+
+            holder.itemView.setOnClickListener {
+                onItemClick(movie)
+            }
         }
 
         override fun getItemCount(): Int = movies.size
@@ -93,8 +99,11 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
 
     }
 
-    override fun onItemClick() {
-        TODO("Not yet implemented")
+    override fun onItemClick(movie: Movie) {
+        val bottomSheet = MovieDetailsBottomSheet.newInstance(movie.originalTitle, movie.overview,
+            movie.posterPath.toString()
+        )
+        bottomSheet.show(supportFragmentManager, "MovieDetailsBottomSheet")
     }
 
     override fun onDestroy() {

@@ -1,5 +1,6 @@
 package com.example.myapplication.home
 
+import Movie
 import MovieResponse
 
 interface MovieContract {
@@ -7,7 +8,7 @@ interface MovieContract {
     interface View {
         fun onSuccess(responses: MovieResponse)
         fun onError()
-        fun onItemClick()
+        fun onItemClick(movie: Movie)
     }
 
     interface Presenter {

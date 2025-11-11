@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/top_rounded_card"
+    >
+
+    <View
+        android:id="@+id/notch"
+        android:layout_width="80dp"
+        android:layout_height="8dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bottom_sheet_handle" />
+
+
+    <ImageView
+        android:id="@+id/bottomSheetImage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
+        />
+
+
+    <TextView
+        android:id="@+id/bottomSheetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="5dp"
+        android:textSize="22sp"
+        android:text="Title"
+        />
+
+    <TextView
+        android:id="@+id/bottomSheetDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginBottom="30dp"
+        android:textSize="14sp"
+        android:text="Description"
+        />
+
+</LinearLayout>
