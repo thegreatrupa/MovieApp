@@ -1,4 +1,4 @@
-package com.example.myapplication.home
+package com.example.myapplication.Movies
 
 import MovieResponse
 import android.util.Log
@@ -30,8 +30,8 @@ class MoviePresenter(private val view: MovieContract.View): MovieContract.Presen
         TODO("Not yet implemented")
     }
 
-    override fun fetchData(page: Int) {
-        interactor.fetchData(page)
+    override fun fetchData(page: Int, movieCategory: String) {
+        interactor.fetchData(page, movieCategory)
     }
 
     override fun onDestroy(){

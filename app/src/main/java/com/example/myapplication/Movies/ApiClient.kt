@@ -1,4 +1,4 @@
-package com.example.myapplication.home
+package com.example.myapplication.Movies
 
 import com.example.myapplication.BuildConfig.BASE_URL
 import okhttp3.OkHttpClient

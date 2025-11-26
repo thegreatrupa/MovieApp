@@ -1,7 +1,8 @@
-package com.example.myapplication.home
+package com.example.myapplication.Movies
 
 import Movie
 import MovieResponse
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +13,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.BuildConfig.IMAGE_BASE_URL
 import com.example.myapplication.R
-import com.example.myapplication.databinding.HomeActivityBinding
 import com.example.myapplication.databinding.MovieCardBinding
+import com.example.myapplication.databinding.MoviesActivityBinding
 
 class MovieActivity: MovieContract.View, AppCompatActivity() {
     private lateinit var presenter: MovieContract.Presenter
     private val movieList = mutableListOf<Movie>()
-    private lateinit var binding: HomeActivityBinding
+    private lateinit var binding: MoviesActivityBinding
     private var page = 1
+    var movieCategory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = HomeActivityBinding.inflate(layoutInflater)
+        binding = MoviesActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -32,17 +34,18 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
             selectedMovie -> onItemClick(selectedMovie)
         }
 
-        addListener()
+        setListener()
 
         presenter = MoviePresenter(this)
         val interactor = MovieInteractor(presenter)
         val router = MovieRouter(presenter)
         presenter.setUp(router, interactor)
 
-        presenter.fetchData(page)
+        movieCategory = intent.getStringExtra("movieCategory").toString() ?: "popular"
+        presenter.fetchData(page, movieCategory!!)
     }
 
-    private fun addListener(){
+    private fun setListener(){
         binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -59,7 +62,7 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
     }
 
     private fun onRecyclerViewBottomReached(){
-        if(page < 10) presenter.fetchData(++page)
+        if(page < 10) presenter.fetchData(++page, movieCategory!!)
     }
 
     class MovieAdapter(private val movies: List<Movie>, private val onItemClick: (Movie) -> Unit): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>(){

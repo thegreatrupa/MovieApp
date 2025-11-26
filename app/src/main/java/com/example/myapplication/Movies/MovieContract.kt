@@ -1,7 +1,8 @@
-package com.example.myapplication.home
+package com.example.myapplication.Movies
 
 import Movie
 import MovieResponse
+import android.R
 
 interface MovieContract {
 
@@ -16,7 +17,7 @@ interface MovieContract {
         fun onSuccess(responses: MovieResponse)
         fun onError()
         fun onItemClick()
-        fun fetchData(page: Int)
+        fun fetchData(page: Int, movieCategory: String)
         fun onDestroy()
 
     }
@@ -26,7 +27,7 @@ interface MovieContract {
     }
 
     interface Interactor {
-        fun fetchData(page: Int)
+        fun fetchData(page: Int, movieCategory: String)
         fun clear()
     }
 }
