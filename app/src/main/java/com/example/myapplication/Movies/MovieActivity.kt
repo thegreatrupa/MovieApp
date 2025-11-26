@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.BuildConfig.IMAGE_BASE_URL
+import com.example.myapplication.Home.MoviesCategory
 import com.example.myapplication.R
 import com.example.myapplication.databinding.MovieCardBinding
 import com.example.myapplication.databinding.MoviesActivityBinding
@@ -34,7 +35,6 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
             selectedMovie -> onItemClick(selectedMovie)
         }
 
-        setListener()
 
         presenter = MoviePresenter(this)
         val interactor = MovieInteractor(presenter)
@@ -43,9 +43,11 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
 
         movieCategory = intent.getStringExtra("movieCategory").toString() ?: "popular"
         presenter.fetchData(page, movieCategory!!)
+        setListener()
     }
 
     private fun setListener(){
+        binding.title.text = getTitleText()
         binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -59,6 +61,16 @@ class MovieActivity: MovieContract.View, AppCompatActivity() {
                 }
             }
         })
+    }
+
+    fun getTitleText(): String {
+        return when(movieCategory){
+            MoviesCategory.NOW_PLAYING.movieCategory -> "Now Playing Movies"
+            MoviesCategory.POPULAR.movieCategory -> "Popular Movies"
+            MoviesCategory.TOP_RATED.movieCategory -> "Top Rated Movies"
+            MoviesCategory.UPCOMING.movieCategory -> "Upcoming Movies"
+            else -> "Popular Movies"
+        }
     }
 
     private fun onRecyclerViewBottomReached(){

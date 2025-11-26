@@ -2,10 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="15dp"
     app:cardBackgroundColor="@color/black"
     android:layout_marginHorizontal="5dp"
     android:layout_marginBottom="10dp"
+    app:cardElevation="1dp"
+    app:cardUseCompatPadding="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -20,7 +22,7 @@
             android:id="@+id/moviePoster"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             android:src="@drawable/ic_launcher_background"
             />
 
@@ -28,7 +30,7 @@
             android:id="@+id/movieTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:text="Title"
             android:gravity="center"
             android:textColor="@color/white"
